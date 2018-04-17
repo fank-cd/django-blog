@@ -1,0 +1,5 @@
+./idea
+*.py[cod]
+*.sqlite3
+.git/
+.idea/
