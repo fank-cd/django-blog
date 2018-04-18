@@ -2,16 +2,9 @@
 from __future__ import unicode_literals
 
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
-class Author(models.Model):
-    name = models.CharField(max_length=20)
-    email = models.EmailField()
-    descript = models.TextField()
-
-    def __unicode__(self):
-        return self.name
 
 class Tag(models.Model):
     tag_name = models.CharField(max_length=20)
@@ -21,16 +14,16 @@ class Tag(models.Model):
         return self.tag_name
 
 class Blog(models.Model):
-    caption = models.CharField(max_length=50)
-    author = models.ForeignKey(Author)
-    tags = models.ManyToManyField(Tag,blank=True)
+    title = models.CharField(max_length=50)
+    author = models.ForeignKey(User,on_delete=models.CASCADE)
+    tags = models.ForeignKey(Tag,blank=True,on_delete=models.DO_NOTHING,default='')
     content = models.TextField()
 
-    publish_time = models.DateTimeField(auto_now_add=True)
-    update_time = models.DateTimeField(auto_now=True)
-    recommend = models.BooleanField(default=True)
+    create_time = models.DateTimeField(auto_now_add=True)
+    last_update_time = models.DateTimeField(auto_now=True)
+    #recommend = models.BooleanField(default=True)
 
     def __unicode__(self):
-        return self.caption,self.author,self.publish_time
+        return self.title
     class Meta:
-        ordering = ['-publish_time']
+        ordering = ['-create_time']
