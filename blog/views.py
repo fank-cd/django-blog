@@ -8,6 +8,7 @@ from .models import Blog,Tag
 def blog_list(request):
     context = {}
     context['blogs'] = Blog.objects.all()
+    context['blog_tags'] = Tag.objects.all()
     return render(request,'blog/blog_list.html',context=context)
 
 def blog_detail(request,pk):
