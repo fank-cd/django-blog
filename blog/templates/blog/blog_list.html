@@ -32,9 +32,8 @@
                             {% endfor %}
 
                         </div>
-
                 </div>
-                <div>
+                <div class="paginator">
                     <ul class="pagination">
                         <li>
                             {% if page_of_blogs.has_previous %}
@@ -62,13 +61,11 @@
                             </a>
                             {% else %}
                             <span aria-hidden="true">&raquo;</span>
-
                             {% endif %}
-
                         </li>
                     </ul>
                     <p>
-                        {% block blog_list_title %}博客列表----- 一共有{{ page_of_blogs.paginator.count }}篇博客{% endblock %}
+                        {% block blog_list_title %}一共有{{ page_of_blogs.paginator.count }}篇博客{% endblock %}
                     </p>
                 </div>
             </div>
@@ -88,6 +85,22 @@
                     </ul>
               </div>
              </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">日期归档</div>
+                <div class="panel-body">
+                    <ul>
+                        {% for blog_date in blog_dates %}
+                        <li>
+                            <a href="{% url 'blog_with_date' blog_date.year blog_date.month %}">
+                            {{ blog_date |date:"Y年m月"}}
+                            </a>
+                            {% empty %}
+                            <li>啥也没有啊兄dei</li>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>

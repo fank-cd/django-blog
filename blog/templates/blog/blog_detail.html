@@ -25,6 +25,23 @@
 
         <div class="blog-content">{{ blog.content }}</div>
 
+        <div class="blog-more">
+                {% if previous_blog.title %}
+                <p>上一篇:
+                    <a href="{% url 'blog_detail' previous_blog.pk %}"> {{ previous_blog.title }}
+                </a></p>
+                {% else %}
+                <p>没了</p>
+                {% endif %}
+
+                {% if next_blog.title %}
+                <p>下一篇:
+                    <a href="{% url 'blog_detail' next_blog.pk %}"> {{ next_blog.title }}
+                </a></p>
+                {% else %}
+                <p>没了</p>
+                {% endif %}
+        </div>
         </div>
     </div>
 </div>
