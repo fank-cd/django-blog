@@ -23,7 +23,7 @@
                 <li>发布时间：{{ blog.create_time|date:"Y-m-d H-m-s"}}</li>
             </ul>
 
-        <div class="blog-content">{{ blog.content }}</div>
+        <div class="blog-content">{{ blog.content|safe }}</div>
 
         <div class="blog-more">
                 {% if previous_blog.title %}
