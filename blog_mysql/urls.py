@@ -17,9 +17,14 @@ from django.conf.urls import url,include
 from django.contrib import admin
 from blog import views
 from blog_mysql import views
+from django.conf.urls.static import static
+from django.conf import settings
+from ckeditor_uploader import urls
 urlpatterns = [
     url(r'^$',views.home,name='index'),
     url(r'^admin/', admin.site.urls),
     url(r'^blog/',include('blog.urls')),
+    url(r'ckeditor',include(urls)),
 
 ]
+urlpatterns +=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

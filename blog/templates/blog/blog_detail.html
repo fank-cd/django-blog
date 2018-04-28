@@ -21,6 +21,7 @@
                 <li>分类：<a href="{% url 'blog_with_type' blog.tags.pk %}">{{ blog.tags }}
                 </a></li>
                 <li>发布时间：{{ blog.create_time|date:"Y-m-d H-m-s"}}</li>
+                <li>阅读({{ blog.get_read_num }})</li>
             </ul>
 
         <div class="blog-content">{{ blog.content|safe }}</div>

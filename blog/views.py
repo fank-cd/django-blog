@@ -4,7 +4,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render,HttpResponse,render_to_response,get_object_or_404
 from django.db.models import Count
 from .models import Blog,Tag
-
+from read_count.utils import read_count_once_read
 # Create your views here.
 def get_blog_lis_common_data(request,blogs_all_list):
 
@@ -47,15 +47,6 @@ def blog_list(request):
     context =get_blog_lis_common_data(request,blogs_all_list)
     return render(request,'blog/blog_list.html',context=context)
 
-def blog_detail(request,pk):
-    context = {}
-    blog = get_object_or_404(Blog,pk=pk)
-    context['blog'] = blog
-    context['previous_blog'] = Blog.objects.filter(create_time__gt=blog.create_time).last()
-    context['next_blog'] = Blog.objects.filter(create_time__lt=blog.create_time).first()
-    return render(request,'blog/blog_detail.html',context=context)
-
-
 def blog_with_type(request,pk):
     context = {}
     blog_type = get_object_or_404(Tag,pk=pk)
@@ -72,3 +63,15 @@ def blog_with_date(request,year,month):
     context['blog_with_date'] = '%s年%s月' % (year,month)
 
     return render(request,'blog/blog_with_date.html',context=context)
+
+def blog_detail(request,pk):
+    context = {}
+    blog = get_object_or_404(Blog,pk=pk)
+    read_cookie_key = read_count_once_read(request,blog)
+    context['blog'] = blog
+    context['previous_blog'] = Blog.objects.filter(create_time__gt=blog.create_time).last()
+    context['next_blog'] = Blog.objects.filter(create_time__lt=blog.create_time).first()
+    response = render_to_response('blog/blog_detail.html',context=context)
+    response.set_cookie(key=read_cookie_key,value="true",max_age=60)
+    return response
+   # return render(request,'blog/blog_detail.html',context=context)
