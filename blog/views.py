@@ -98,7 +98,9 @@ def blog_detail(request, pk):
     blog = get_object_or_404(Blog, pk=pk)
     read_cookie_key = read_count_once_read(request, blog)
     blog_content_type = ContentType.objects.get_for_model(blog)
-    comments = Comment.objects.filter(content_type =blog_content_type,object_id =blog.pk)
+    comments = Comment.objects.filter(
+        content_type=blog_content_type,
+        object_id=blog.pk)
 
     context['blog'] = blog
     context['previous_blog'] = Blog.objects.filter(
@@ -106,7 +108,7 @@ def blog_detail(request, pk):
     context['next_blog'] = Blog.objects.filter(
         create_time__lt=blog.create_time).first()
     context['comments'] = comments
-    response = render(request,'blog/blog_detail.html', context=context)
+    response = render(request, 'blog/blog_detail.html', context=context)
     response.set_cookie(key=read_cookie_key, value="true", max_age=60)
     return response
    # return render(request,'blog/blog_detail.html',context=context)
