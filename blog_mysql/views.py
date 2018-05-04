@@ -1,15 +1,16 @@
 # coding:utf-8
 from django.shortcuts import render, redirect
-from read_count.utils import get_seven_days_read_data, get_tody_hot_data, get_yesterday_hot_data, get_seven_days_hot_data
+from read_count.utils import get_seven_days_read_data, get_tody_hot_data, get_yesterday_hot_data
 from blog.models import Blog
 from django.contrib.contenttypes.models import ContentType
 from django.utils import timezone
 import datetime
 from django.db.models import Sum
 from django.core.cache import cache
-from blog_mysql.forms import LoginForm
+from blog_mysql.forms import LoginForm, RegForm
 from django.contrib import auth
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 
 def get_7_days_hot_blogs():
@@ -61,3 +62,25 @@ def login(request):
     context = {}
     context['login_form'] = login_form
     return render(request, 'login.html', context=context)
+
+
+def register(request):
+    if request.method == 'POST':
+        reg_form = RegForm(request.POST)
+        if reg_form.is_valid():
+            username = reg_form.cleaned_data['username']
+            email = reg_form.cleaned_data['email']
+            password = reg_form.cleaned_data['password']
+            user = User.objects.create_user(username, email, password)
+            user.save()
+
+            user = auth.authenticate(username=username, password=password)
+            auth.login(request, user)
+            return redirect(request.GET.get('from', reverse('index')))
+    else:
+        reg_form = RegForm
+
+    context = {}
+    context['reg_form'] = reg_form
+
+    return render(request, 'register.html', context=context)
