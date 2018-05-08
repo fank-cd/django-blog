@@ -7,7 +7,9 @@ from django.db.models import ObjectDoesNotExist
 class CommentForm(forms.Form):
     content_type = forms.CharField(widget=forms.HiddenInput)
     object_id = forms.IntegerField(widget=forms.HiddenInput)
-    text = forms.CharField(widget=forms.Textarea)
+    text = forms.CharField(widget=CKEditorWidget(config_name='comment_ckeditor'))
+
+    reply_comment_id = forms.IntegerField(widget=forms.HiddenInput(attrs={'id':'reply_comment_id'}))
 
     def __init__(self,*args,**kwargs):
         if 'user' in kwargs:
@@ -25,8 +27,11 @@ class CommentForm(forms.Form):
         try:
             model_class = ContentType.objects.get(model = content_type).model_class()
             model_obj = model_class.objects.get(pk=object_id)
-            self.cleaned_data['content_type'] = model_obj
+            self.cleaned_data['content_object'] = model_obj
         except ObjectDoesNotExist:
             raise forms.ValidationError("评论对象不存在")
 
         return self.cleaned_data
+
+    def clean_reply_comment_id(self):
+        

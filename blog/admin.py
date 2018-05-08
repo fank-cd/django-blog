@@ -13,6 +13,7 @@ class TagAdmin(admin.ModelAdmin):
 class BlogAdmin(admin.ModelAdmin):
     list_display = (
         'title',
+        'id',
         'tags',
         'get_read_num',
         'create_time',

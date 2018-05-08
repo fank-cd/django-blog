@@ -101,7 +101,7 @@ def blog_detail(request, pk):
     blog_content_type = ContentType.objects.get_for_model(blog)
     comments = Comment.objects.filter(
         content_type=blog_content_type,
-        object_id=blog.pk)
+        object_id=blog.pk,parent=None)
 
     context['blog'] = blog
     context['previous_blog'] = Blog.objects.filter(
@@ -109,7 +109,8 @@ def blog_detail(request, pk):
     context['next_blog'] = Blog.objects.filter(
         create_time__lt=blog.create_time).first()
     context['comments'] = comments
-    context['comment_form'] = CommentForm(initial={'content_type':blog_content_type.model,'object_id':pk})
+    context['comment_form'] = CommentForm(initial={
+        'content_type':blog_content_type.model,'object_id':pk,'reply_comment_id':0})
     response = render(request, 'blog/blog_detail.html', context=context)
     response.set_cookie(key=read_cookie_key, value="true", max_age=60)
     return response
