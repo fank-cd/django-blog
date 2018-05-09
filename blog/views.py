@@ -103,6 +103,9 @@ def blog_detail(request, pk):
         content_type=blog_content_type,
         object_id=blog.pk,parent=None)
 
+    context['comment_count'] = Comment.objects.filter(
+        content_type=blog_content_type,
+        object_id=blog.pk,parent=None).count()
     context['blog'] = blog
     context['previous_blog'] = Blog.objects.filter(
         create_time__gt=blog.create_time).last()
