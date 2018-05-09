@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from .models import Comment
-from django.shortcuts import render,reverse,redirect
-from django.http import JsonResponse
+from django.shortcuts import render, redirect
 from django.contrib.contenttypes.models import ContentType
+from django.urls import reverse
+from django.http import JsonResponse
+from .models import Comment
 from django.contrib.auth.decorators import login_required
 from comment.forms import CommentForm
 from comment.utils import date_to_string
@@ -12,7 +13,6 @@ from comment.utils import date_to_string
 
 @login_required()
 def update_comment(request):
-
     data = {}
     comment_form = CommentForm(request.POST,user=request.user)
     if comment_form.is_valid():
@@ -31,7 +31,6 @@ def update_comment(request):
         data['status'] = 'SUCCESS'
         data['username'] = comment.user.username
         data['comment_time'] = date_to_string(comment.comment_time.strftime('%Y-%m-%d %H:%M:%S'))
-        #print data['comment_time']
         data['text'] =comment.text
         if not  parent is None:
             data['reply_to'] = comment.reply_to.username

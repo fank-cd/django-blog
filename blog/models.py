@@ -5,7 +5,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.contenttypes.fields import GenericRelation
-from read_count.models import ReadNumExpandMethod,ReadDetail
+from read_count.models import ReadNumExpandMethod, ReadDetail
 
 # Create your models here.
 
@@ -24,10 +24,10 @@ class Blog(models.Model, ReadNumExpandMethod):
     tags = models.ForeignKey(
         Tag,
         blank=True,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
         default='')
     content = RichTextUploadingField()
-    read_details =GenericRelation(ReadDetail)
+    read_details = GenericRelation(ReadDetail)
     create_time = models.DateTimeField(auto_now_add=True)
     last_update_time = models.DateTimeField(auto_now=True)
     #recommend = models.BooleanField(default=True)

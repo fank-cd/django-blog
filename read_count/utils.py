@@ -27,7 +27,6 @@ def read_count_once_read(request, obj):
         readnum.read_num += 1
         readnum.save()
         date = timezone.now().date()
-        # 某天阅读数
         readdetail = ReadDetail.objects.get_or_create(
             content_type=ct, object_id=obj.pk, date=date)[0]
         # get_or_create方法会返回一个两个值，一个是查找的元素，一个是这个元素是创建的还是获取的
@@ -62,7 +61,7 @@ def get_seven_days_read_data(content_type):
 def get_tody_hot_data(content_type):
     today = timezone.now().date()
     read_details = ReadDetail.objects.filter(
-        content_type=content_type,date=today).order_by('-read_num')
+        content_type=content_type, date=today).order_by('-read_num')
     return read_details[:7]
 
 
@@ -70,15 +69,19 @@ def get_yesterday_hot_data(content_type):
     today = timezone.now().date()
     yesterdaty = today - datetime.timedelta(days=1)
     read_details = ReadDetail.objects.filter(
-        content_type=content_type,date=yesterdaty).order_by('-read_num')
+        content_type=content_type, date=yesterdaty).order_by('-read_num')
     return read_details[:7]
+
 
 def get_seven_days_hot_data(content_type):
     today = timezone.now().date()
     date = today - datetime.timedelta(days=1)
     read_details = ReadDetail.objects.filter(
-        content_type=content_type,date__lt=today,date__gte=date).values('content_type','object_id')\
-        .annotate(read_num_sum=Sum('read_num')).\
-        order_by('-read_num')
+        content_type=content_type,
+        date__lt=today,
+        date__gte=date).values(
+        'content_type',
+        'object_id') .annotate(
+            read_num_sum=Sum('read_num')). order_by('-read_num')
 
     return read_details[:7]

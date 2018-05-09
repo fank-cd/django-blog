@@ -157,18 +157,6 @@ CKEDITOR_CONFIGS = {
     },
 
     'default': {
-        'toolbar': 'custom',
-        'toolbar_custom': [
-            ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'],
-            ["TextColor", "BGColor", 'RemoveFormat'],
-            ['NumberedList', 'BulletedList'],
-            ['Image'],
-            ['Link', 'Unlink'],
-            ["Smiley", "SpecialChar", 'Blockquote'],
-        ],
-        'tabSpaces': 4,
-        'removePlugins': 'elementspath',
-        'resize_enabled': False,
     }
 }
 
