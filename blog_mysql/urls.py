@@ -20,6 +20,8 @@ from blog_mysql import views
 from django.conf.urls.static import static
 from django.conf import settings
 from ckeditor_uploader import urls
+
+
 urlpatterns = [
     url(r'^$', views.home, name='index'),
     url(r'^admin/', admin.site.urls),
@@ -28,5 +30,7 @@ urlpatterns = [
     url(r'^login/',views.login,name='login'),
     url(r'^register/',views.register,name='register'),
     url(r'^comment/',include('comment.urls')),
+    url(r'^likes/',include('likes.urls')),
+
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

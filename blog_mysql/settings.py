@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'blog',
     'read_count',
     'comment',
+    'likes',
 ]
 
 MIDDLEWARE = [
@@ -61,7 +62,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR,'templates'),
+            os.path.join(BASE_DIR,'templatetags'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {

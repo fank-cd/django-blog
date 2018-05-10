@@ -6,6 +6,7 @@
 
 {% load staticfiles %}
 {% load comment_tags %}
+{% load like_tags %}
 {% block header_extends %}
     <link rel="stylesheet" href="{% static 'blog.css' %}">
     <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
@@ -29,6 +30,12 @@
             </ul>
 
         <div class="blog-content">{{ blog.content|safe }}</div>
+
+        <div class="like" onclick="likeChange(this,'blog',{{ blog.pk }})">
+            <span class="glyphicon glyphicon-thumbs-up"></span>
+            <span class="liked-num">{% get_like_count blog %}</span>
+            <span>喜欢</span>
+        </div>
 
         <div class="blog-more">
                 {% if previous_blog.title %}
@@ -184,6 +191,28 @@
             });
             return false;
         });
+
+        function likeChange(obj,content_type,object_id){
+            var is_like = obj.getElementsByClassName('active').length == 0
+            $.ajax({
+                url:"{% url 'like_change' %}",
+                type:'GET',
+                data:{
+                    content_type:content_type,
+                    object_id:object_id,
+                    is_like:is_like
+                },
+                cache:false,
+                success:function(data){
+                    console.log(data)
+                },
+                error:function(xhr){
+                    console.log(xhr)
+                }
+            });
+
+        }
+
 
     </script>
 {% endblock %}
