@@ -14,9 +14,21 @@ def get_like_count(obj):
 
 
 @register.simple_tag(takes_context=True)
-def get_like_status(obj):
+def get_like_status(context,obj):
     content_type = ContentType.objects.get_for_model(obj)
-    if LikeRecord.objects.filter(content_type=content_type,object_id=obj.pk,user=context['user']).exist():
+    user = context['user']
+    if not user.is_authenticated:
+        return ''
+    if LikeRecord.objects.filter(content_type=content_type,object_id=obj.pk,user=user).exists():
         return 'active'
     else:
-        return 
+        return ''
+
+
+@register.simple_tag()
+def get_content_type(obj):
+    content_type = ContentType.objects.get_for_model(obj)
+
+    return content_type.model
+
+
