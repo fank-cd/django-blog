@@ -7,7 +7,7 @@ from .models import Blog, Tag
 from read_count.utils import read_count_once_read
 from django.contrib.contenttypes.models import ContentType
 from comment.models import Comment
-from comment.forms import CommentForm
+from blog_mysql.forms import LoginForm
 # Create your views here.
 
 
@@ -100,6 +100,7 @@ def blog_detail(request, pk):
     read_cookie_key = read_count_once_read(request, blog)
     blog_content_type = ContentType.objects.get_for_model(blog)
 
+    context['login_form'] = LoginForm()
     context['comment_count'] = Comment.objects.filter(
         content_type=blog_content_type,
         object_id=blog.pk, parent=None).count()

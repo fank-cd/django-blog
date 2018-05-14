@@ -11,7 +11,7 @@ from blog_mysql.forms import LoginForm, RegForm
 from django.contrib import auth
 from django.urls import reverse
 from django.contrib.auth.models import User
-
+from django.http import JsonResponse
 
 def get_7_days_hot_blogs():
     today = timezone.now().date()
@@ -62,6 +62,18 @@ def login(request):
     context = {}
     context['login_form'] = login_form
     return render(request, 'login.html', context=context)
+
+
+def login_for_modal(request):
+    login_form = LoginForm(request.POST)
+    data = {}
+    if login_form.is_valid():
+        user = login_form.cleaned_data['user']
+        auth.login(request,user)
+        data['status'] = 'SUCCESS'
+    else:
+        data['status'] = "ERROR"
+    return JsonResponse(data)
 
 
 def register(request):
