@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.shortcuts import render, redirect
+
 from django.contrib.contenttypes.models import ContentType
-from django.urls import reverse
 from django.http import JsonResponse
 from .models import Comment
 from django.contrib.auth.decorators import login_required

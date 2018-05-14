@@ -12,6 +12,7 @@ from django.contrib import auth
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 def get_7_days_hot_blogs():
     today = timezone.now().date()
@@ -96,3 +97,13 @@ def register(request):
     context['reg_form'] = reg_form
 
     return render(request, 'register.html', context=context)
+
+login_required()
+def logout(request):
+    auth.logout(request)
+    return redirect(request.GET.get('from', reverse('index')))
+
+
+def user_info(request):
+
+    return render(request,'user_info.html',context={})

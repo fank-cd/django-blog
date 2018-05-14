@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+    我的网站|个人主页
+{% endblock %}
+
+{% block header_extends %}
+{% endblock %}
+{% block content %}
+    <div class="containter">
+        <div class="row">
+            <div class="col-xs-10 col-xs-offset-1">
+                <h2> {{ user.username }}</h2>
+                <ul>
+                    <li>邮箱:{% if user.email %}{{ user.email }}
+                            {% else %} <a href="#">未绑定，点此绑定邮箱</a>
+                            {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

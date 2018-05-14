@@ -31,7 +31,9 @@ urlpatterns = [
     url(r'^register/',views.register,name='register'),
     url(r'^comment/',include('comment.urls')),
     url(r'^likes/',include('likes.urls')),
-    url(r'^login_for_modal/',views.login_for_modal,name='login_for_medal')
+    url(r'^login_for_modal/',views.login_for_modal,name='login_for_medal'),
+    url(r'^logout/',views.logout,name='logout'),
+    url(r'^user_info/', views.user_info, name='user_info'),
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
