@@ -7,7 +7,7 @@ from django.utils import timezone
 import datetime
 from django.db.models import Sum
 from django.core.cache import cache
-from blog_mysql.forms import LoginForm, RegForm
+from blog_mysite.forms import LoginForm, RegForm
 from django.contrib import auth
 from django.urls import reverse
 from django.contrib.auth.models import User

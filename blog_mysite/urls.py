@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from blog import views
-from blog_mysql import views
+from blog_mysite import views
 from django.conf.urls.static import static
 from django.conf import settings
 from ckeditor_uploader import urls

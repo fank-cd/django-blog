@@ -7,7 +7,7 @@ from .models import Blog, Tag
 from read_count.utils import read_count_once_read
 from django.contrib.contenttypes.models import ContentType
 from comment.models import Comment
-from blog_mysql.forms import LoginForm
+from blog_mysite.forms import LoginForm
 # Create your views here.
 
 
