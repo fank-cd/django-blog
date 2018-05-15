@@ -10,13 +10,22 @@
     <div class="containter">
         <div class="row">
             <div class="col-xs-10 col-xs-offset-1">
+                {% if user.is_authenticated %}
                 <h2> {{ user.username }}</h2>
                 <ul>
+                    <li>昵称：<a href="">修改昵称</a></li>
                     <li>邮箱:{% if user.email %}{{ user.email }}
                             {% else %} <a href="#">未绑定，点此绑定邮箱</a>
                             {% endif %}
                     </li>
+                    <li>上一次登录时间：{{ user.last_login |date:"Y-m-d H:i:s"}}</li>
+                    <a href="#">修改密码</a>
                 </ul>
+                {% else%}
+                <script type="text/javascript">
+                    window.location.href='/'
+                </script>
+                {% endif %}
             </div>
         </div>
     </div>
